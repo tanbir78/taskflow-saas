@@ -1,11 +1,20 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { QueryClient, QueryClientProvider, } from '@tanstack/react-query';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
 import { Toaster } from 'sonner';
 import AuthProvider from './providers/AuthProvider';
 import PrivateRoute from './routes/PrivateRoute';
 import Landing from './pages/Landing';
 import AuthPage from './pages/AuthPage';
 import AppHome from './pages/AppHome';
+import WorkspacePage from './pages/WorkspacePage';
 
 // React Query configuration
 const qc = new QueryClient({
@@ -40,12 +49,21 @@ export default function App() {
               element={<AuthPage mode="register" />}
             />
 
-            {/* Protected application route */}
+            {/* Protected application routes */}
             <Route
               path="/app"
               element={
                 <PrivateRoute>
                   <AppHome />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/app/workspaces/:workspaceId"
+              element={
+                <PrivateRoute>
+                  <WorkspacePage />
                 </PrivateRoute>
               }
             />
@@ -58,10 +76,8 @@ export default function App() {
           </Routes>
         </BrowserRouter>
 
-        {/* Toast notifications */}
         <Toaster richColors />
       </AuthProvider>
     </QueryClientProvider>
   );
 }
-
