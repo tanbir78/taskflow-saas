@@ -1,23 +1,30 @@
+
 import {
   BrowserRouter,
   Routes,
   Route,
   Navigate,
 } from 'react-router-dom';
+
 import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
+
 import { Toaster } from 'sonner';
+
 import AuthProvider from './providers/AuthProvider';
+import ThemeProvider from './providers/ThemeProvider';
+
 import PrivateRoute from './routes/PrivateRoute';
+import AppLayout from './layouts/AppLayout';
+
 import Landing from './pages/Landing';
 import AuthPage from './pages/AuthPage';
 import AppHome from './pages/AppHome';
 import WorkspacePage from './pages/WorkspacePage';
 
-// React Query configuration
-const qc = new QueryClient({
+const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 30_000,
@@ -28,56 +35,49 @@ const qc = new QueryClient({
 
 export default function App() {
   return (
-    <QueryClientProvider client={qc}>
-      <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            {/* Landing page */}
-            <Route
-              path="/"
-              element={<Landing />}
-            />
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Landing />} />
 
-            {/* Authentication routes */}
-            <Route
-              path="/login"
-              element={<AuthPage mode="login" />}
-            />
+              <Route
+                path="/login"
+                element={<AuthPage mode="login" />}
+              />
 
-            <Route
-              path="/register"
-              element={<AuthPage mode="register" />}
-            />
+              <Route
+                path="/register"
+                element={<AuthPage mode="register" />}
+              />
 
-            {/* Protected application routes */}
-            <Route
-              path="/app"
-              element={
-                <PrivateRoute>
-                  <AppHome />
-                </PrivateRoute>
-              }
-            />
+              <Route
+                path="/app"
+                element={
+                  <PrivateRoute>
+                    <AppLayout />
+                  </PrivateRoute>
+                }
+              >
+                <Route index element={<AppHome />} />
 
-            <Route
-              path="/app/workspaces/:workspaceId"
-              element={
-                <PrivateRoute>
-                  <WorkspacePage />
-                </PrivateRoute>
-              }
-            />
+                <Route
+                  path="workspaces/:workspaceId"
+                  element={<WorkspacePage />}
+                />
+              </Route>
 
-            {/* Redirect unknown routes */}
-            <Route
-              path="*"
-              element={<Navigate to="/" replace />}
-            />
-          </Routes>
-        </BrowserRouter>
+              <Route
+                path="*"
+                element={<Navigate to="/" replace />}
+              />
+            </Routes>
+          </BrowserRouter>
 
-        <Toaster richColors />
-      </AuthProvider>
+          <Toaster richColors position="top-right" />
+        </AuthProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

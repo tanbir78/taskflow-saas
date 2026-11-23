@@ -1,14 +1,846 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Respect users' reduced motion preferences */
-@media (prefers-reduced-motion: reduce) {
+/* Global Styles */
+@layer base {
+  * {
+    @apply box-border;
+  }
 
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-    }
+  body {
+    @apply bg-base-100 text-base-content;
+    font-family: Inter, system-ui, sans-serif;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+  }
+
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    transition: all 0.2s ease;
+  }
 }
+
+/* Reusable Components */
+@layer components {
+  .taskflow-card {
+    @apply rounded-2xl border border-base-300
+           bg-base-200 shadow-soft
+           transition-all duration-300;
+  }
+
+  .taskflow-card:hover {
+    @apply -translate-y-1 shadow-lg;
+  }
+
+  .taskflow-input {
+    @apply input input-bordered w-full
+           bg-base-100 text-base-content
+           border-base-300
+           focus:border-primary
+           focus:outline-none;
+  }
+
+  .taskflow-primary-btn {
+    @apply btn btn-primary rounded-xl
+           font-semibold shadow-sm;
+  }
+
+  .taskflow-section {
+    @apply rounded-2xl bg-base-100 text-base-content;
+  }
+}
+
+/* Smooth Theme Transition */
+html {
+  color-scheme: light;
+}
+
+html[data-theme="taskflow-dark"] {
+  color-scheme: dark;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* =====================================
+   TASKFLOW - PREMIUM THEME SYSTEM
+===================================== */
+
+/* Light Theme */
+html[data-theme="taskflow-light"] {
+  --tf-page: #F0F7F3;
+  --tf-section: #EAF3EF;
+  --tf-card: #FFFFFF;
+  --tf-card-hover: #F8FFFB;
+  --tf-border: #D5E3DC;
+  --tf-heading: #172B25;
+  --tf-text: #52665E;
+  --tf-muted: #718096;
+  --tf-icon-bg: #DDF7ED;
+  --tf-icon: #059B78;
+  --tf-shadow: 0 4px 16px rgba(15, 40, 30, 0.06);
+  --tf-hover-shadow: 0 12px 30px rgba(15, 40, 30, 0.12);
+}
+
+/* Dark Theme */
+html[data-theme="taskflow-dark"] {
+  --tf-page: #0B1220;
+  --tf-section: #101B2B;
+  --tf-card: #18263A;
+  --tf-card-hover: #1E3048;
+  --tf-border: #35465E;
+  --tf-heading: #F1F5F9;
+  --tf-text: #B0BDCE;
+  --tf-muted: #94A3B8;
+  --tf-icon-bg: #174A3C;
+  --tf-icon: #6EE7B7;
+  --tf-shadow: 0 4px 18px rgba(0, 0, 0, 0.20);
+  --tf-hover-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Page Background */
+body {
+  background-color: var(--tf-page);
+  color: var(--tf-heading);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Features Section */
+.taskflow-features-section {
+  background-color: var(--tf-section);
+  transition: background-color 0.3s ease;
+}
+
+/* Feature Card */
+.taskflow-feature-card {
+  background-color: var(--tf-card);
+  border: 1px solid var(--tf-border);
+  border-radius: 18px;
+  padding: 26px;
+  box-shadow: var(--tf-shadow);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.taskflow-feature-card:hover {
+  background-color: var(--tf-card-hover);
+  border-color: var(--tf-icon);
+  box-shadow: var(--tf-hover-shadow);
+  transform: translateY(-6px);
+}
+
+/* Feature Icon */
+.taskflow-feature-icon {
+  display: flex;
+  width: 46px;
+  height: 46px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 13px;
+  background-color: var(--tf-icon-bg);
+  color: var(--tf-icon);
+  transition: all 0.3s ease;
+}
+
+/* Feature Card Typography */
+.taskflow-feature-title {
+  color: var(--tf-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.taskflow-feature-description {
+  color: var(--tf-text);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+/* Theme Transition */
+.taskflow-feature-card,
+.taskflow-feature-icon,
+.taskflow-features-section {
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .taskflow-feature-card,
+  .taskflow-feature-icon,
+  .taskflow-features-section {
+    transition: none;
+  }
+}
+
+
+/* ===================================
+   TASKFLOW AUTH PAGE - DARK & LIGHT
+=================================== */
+
+/* Light Mode */
+html[data-theme="taskflow-light"] {
+  --auth-bg: #F0F7F3;
+  --auth-card: #FFFFFF;
+  --auth-border: #D5E3DC;
+  --auth-input: #F8FFFB;
+  --auth-input-border: #CBDDD3;
+  --auth-heading: #172B25;
+  --auth-text: #52665E;
+  --auth-muted: #718096;
+  --auth-shadow: 0 12px 35px rgba(15, 40, 30, 0.08);
+}
+
+/* Dark Mode */
+html[data-theme="taskflow-dark"] {
+  --auth-bg: #0B1220;
+  --auth-card: #18263A;
+  --auth-border: #3B506B;
+  --auth-input: #243449;
+  --auth-input-border: #526780;
+  --auth-heading: #F8FAFC;
+  --auth-text: #D1DBE8;
+  --auth-muted: #A9B8CB;
+  --auth-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.35),
+    0 0 25px rgba(52, 211, 153, 0.05);
+}
+
+/* Authentication Page */
+.auth-page {
+  background: var(--auth-bg);
+  color: var(--auth-heading);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Authentication Card */
+.auth-card {
+  background: var(--auth-card);
+  border: 1px solid var(--auth-border);
+  border-radius: 20px;
+  box-shadow: var(--auth-shadow);
+  transition: all 0.3s ease;
+}
+
+/* Authentication Heading */
+.auth-heading {
+  color: var(--auth-heading);
+}
+
+/* Authentication Description */
+.auth-description {
+  color: var(--auth-text);
+}
+
+/* Input Fields */
+.auth-input {
+  width: 100%;
+  background: var(--auth-input);
+  color: var(--auth-heading);
+  border: 1px solid var(--auth-input-border);
+  border-radius: 10px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.auth-input::placeholder {
+  color: var(--auth-muted);
+}
+
+.auth-input:focus {
+  border-color: #34D399;
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.13);
+}
+
+/* Input Labels */
+.auth-label {
+  color: var(--auth-heading);
+  font-weight: 600;
+}
+
+/* Google Button */
+.auth-google-btn {
+  background: transparent;
+  color: var(--auth-heading);
+  border: 1px solid var(--auth-input-border);
+  transition: all 0.2s ease;
+}
+
+.auth-google-btn:hover {
+  background: var(--auth-input);
+  border-color: #34D399;
+}
+
+/* Footer */
+.auth-footer {
+  color: var(--auth-muted);
+}
+
+
+
+/* ==========================================
+   TASKFLOW WORKSPACE PAGE THEME
+========================================== */
+
+/* Light Mode */
+html[data-theme="taskflow-light"] {
+  --ws-page: #F0F7F3;
+  --ws-panel: #FFFFFF;
+  --ws-card: #FFFFFF;
+  --ws-card-hover: #F8FFFB;
+  --ws-border: #D5E3DC;
+  --ws-border-hover: #00B894;
+  --ws-heading: #172B25;
+  --ws-description: #52665E;
+  --ws-muted: #718096;
+  --ws-icon-bg: #DDF7ED;
+  --ws-icon-color: #059B78;
+  --ws-shadow: 0 5px 18px rgba(15, 40, 30, 0.06);
+  --ws-hover-shadow: 0 14px 32px rgba(15, 40, 30, 0.12);
+  --ws-input: #F8FFFB;
+  --ws-input-border: #CBDDD3;
+}
+
+/* Dark Mode */
+html[data-theme="taskflow-dark"] {
+  --ws-page: #0B1220;
+  --ws-panel: #151F30;
+  --ws-card: #1C2B40;
+  --ws-card-hover: #22354D;
+  --ws-border: #40536D;
+  --ws-border-hover: #34D399;
+  --ws-heading: #F8FAFC;
+  --ws-description: #B8C7D9;
+  --ws-muted: #9AABC0;
+  --ws-icon-bg: #174A3C;
+  --ws-icon-color: #6EE7B7;
+  --ws-shadow: 0 5px 20px rgba(0, 0, 0, 0.22);
+  --ws-hover-shadow: 0 14px 32px rgba(0, 0, 0, 0.38);
+  --ws-input: #243449;
+  --ws-input-border: #526780;
+}
+
+/* Main Workspace Page */
+.workspace-page {
+  background-color: var(--ws-page);
+  color: var(--ws-heading);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Typography */
+.workspace-heading {
+  color: var(--ws-heading);
+}
+
+.workspace-description {
+  color: var(--ws-description);
+}
+
+.workspace-muted {
+  color: var(--ws-muted);
+}
+
+/* Create Workspace Panel */
+.workspace-create-panel {
+  background-color: var(--ws-panel);
+  border-color: var(--ws-border);
+  box-shadow: var(--ws-shadow);
+}
+
+/* Workspace Count */
+.workspace-count-card {
+  background-color: var(--ws-card);
+  border-color: var(--ws-border);
+}
+
+/* Workspace Input */
+.workspace-input {
+  background-color: var(--ws-input);
+  color: var(--ws-heading);
+  border: 1px solid var(--ws-input-border);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.3s ease;
+}
+
+.workspace-input::placeholder {
+  color: var(--ws-muted);
+}
+
+.workspace-input:focus {
+  border-color: var(--ws-border-hover);
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.14);
+}
+
+/* Workspace Card */
+.workspace-card {
+  background-color: var(--ws-card);
+  border-color: var(--ws-border);
+  box-shadow: var(--ws-shadow);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.workspace-card:hover {
+  background-color: var(--ws-card-hover);
+  border-color: var(--ws-border-hover);
+  box-shadow: var(--ws-hover-shadow);
+  transform: translateY(-4px);
+}
+
+/* Workspace Card Icon */
+.workspace-card-icon {
+  background-color: var(--ws-icon-bg);
+  color: var(--ws-icon-color);
+}
+
+/* Card Footer */
+.workspace-card-footer {
+  border-color: var(--ws-border);
+}
+
+/* Role Badges */
+.workspace-role-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 5px 11px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.workspace-role-owner {
+  background-color: #A7F3D0;
+  color: #064E3B;
+}
+
+.workspace-role-manager {
+  background-color: #BFDBFE;
+  color: #1E40AF;
+}
+
+.workspace-role-member {
+  background-color: #E9D5FF;
+  color: #6B21A8;
+}
+
+.workspace-role-guest {
+  background-color: #FED7AA;
+  color: #9A3412;
+}
+
+/* Loading and Empty States */
+.workspace-state-card {
+  background-color: var(--ws-panel);
+  border-color: var(--ws-border);
+  box-shadow: var(--ws-shadow);
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .workspace-card,
+  .workspace-page,
+  .workspace-input {
+    transition: none;
+  }
+}
+
+
+
+/* ==========================================
+   TASKFLOW WORKSPACE DASHBOARD
+   LIGHT + DARK THEME
+========================================== */
+
+/* Light Theme */
+html[data-theme="taskflow-light"] {
+  --wd-page: #F0F7F3;
+  --wd-panel: #FFFFFF;
+  --wd-card: #FFFFFF;
+  --wd-card-hover: #F7FCF9;
+  --wd-border: #D5E3DC;
+  --wd-border-hover: #00B894;
+  --wd-heading: #172B25;
+  --wd-text: #52665E;
+  --wd-muted: #718096;
+  --wd-input: #F8FFFB;
+  --wd-input-border: #CBDDD3;
+  --wd-icon-bg: #DDF7ED;
+  --wd-icon-color: #059B78;
+  --wd-shadow: 0 5px 18px rgba(15, 40, 30, 0.06);
+  --wd-hover-shadow: 0 14px 32px rgba(15, 40, 30, 0.12);
+}
+
+/* Dark Theme */
+html[data-theme="taskflow-dark"] {
+  --wd-page: #0B1220;
+  --wd-panel: #151F30;
+  --wd-card: #1C2B40;
+  --wd-card-hover: #243750;
+  --wd-border: #40536D;
+  --wd-border-hover: #34D399;
+  --wd-heading: #F8FAFC;
+  --wd-text: #C0CDDC;
+  --wd-muted: #A5B5C9;
+  --wd-input: #243449;
+  --wd-input-border: #526780;
+  --wd-icon-bg: #174A3C;
+  --wd-icon-color: #6EE7B7;
+  --wd-shadow: 0 5px 20px rgba(0, 0, 0, 0.22);
+  --wd-hover-shadow: 0 14px 32px rgba(0, 0, 0, 0.38);
+}
+
+/* Main Page */
+.workspace-page {
+  background-color: var(--wd-page);
+  color: var(--wd-heading);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Panels */
+.workspace-panel {
+  background-color: var(--wd-panel);
+  border: 1px solid var(--wd-border);
+  box-shadow: var(--wd-shadow);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Typography */
+.workspace-heading {
+  color: var(--wd-heading);
+}
+
+.workspace-description {
+  color: var(--wd-text);
+}
+
+.workspace-muted {
+  color: var(--wd-muted);
+}
+
+/* Back Navigation */
+.workspace-back-link {
+  color: var(--wd-text);
+  transition: color 0.2s ease;
+}
+
+.workspace-back-link:hover {
+  color: #10B981;
+}
+
+/* Icon Boxes */
+.workspace-icon-box {
+  background-color: var(--wd-icon-bg);
+  color: var(--wd-icon-color);
+  border-radius: 14px;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.workspace-icon-purple {
+  background-color: #EDE9FE;
+  color: #7C3AED;
+}
+
+html[data-theme="taskflow-dark"] .workspace-icon-purple {
+  background-color: #352B59;
+  color: #C4B5FD;
+}
+
+.workspace-icon-blue {
+  background-color: #DBEAFE;
+  color: #2563EB;
+}
+
+html[data-theme="taskflow-dark"] .workspace-icon-blue {
+  background-color: #1E3A5F;
+  color: #93C5FD;
+}
+
+/* Role Badge */
+.workspace-role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--wd-border);
+  border-radius: 999px;
+  background-color: var(--wd-card);
+  color: var(--wd-heading);
+  padding: 8px 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+/* Statistics Cards */
+.workspace-stat-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 132px;
+  padding: 24px;
+  border: 1px solid var(--wd-border);
+  border-radius: 18px;
+  background-color: var(--wd-card);
+  box-shadow: var(--wd-shadow);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.workspace-stat-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--wd-border-hover);
+  box-shadow: var(--wd-hover-shadow);
+}
+
+/* Form Labels */
+.workspace-label {
+  display: block;
+  color: var(--wd-heading);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* Form Controls */
+.workspace-form-control {
+  display: block;
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid var(--wd-input-border);
+  border-radius: 11px;
+  background-color: var(--wd-input);
+  color: var(--wd-heading);
+  padding: 10px 13px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.3s ease;
+}
+
+.workspace-form-control::placeholder {
+  color: var(--wd-muted);
+}
+
+.workspace-form-control:focus {
+  border-color: var(--wd-border-hover);
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.14);
+}
+
+.workspace-form-control option {
+  background-color: var(--wd-panel);
+  color: var(--wd-heading);
+}
+
+/* Color Input */
+.workspace-color-input {
+  display: block;
+  width: 100%;
+  height: 46px;
+  cursor: pointer;
+  border: 1px solid var(--wd-input-border);
+  border-radius: 11px;
+  background-color: var(--wd-input);
+  padding: 5px;
+}
+
+/* Project Cards */
+.workspace-project-card {
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+  border: 1px solid var(--wd-border);
+  border-radius: 18px;
+  background-color: var(--wd-card);
+  box-shadow: var(--wd-shadow);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.workspace-project-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--wd-border-hover);
+  background-color: var(--wd-card-hover);
+  box-shadow: var(--wd-hover-shadow);
+}
+
+/* Project Card Footer */
+.workspace-project-footer {
+  border-top: 1px solid var(--wd-border);
+}
+
+/* Project Status Badges */
+.project-status-badge,
+.project-priority-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: capitalize;
+}
+
+.project-status-planning {
+  background-color: #DBEAFE;
+  color: #1D4ED8;
+}
+
+.project-status-active,
+.project-status-completed {
+  background-color: #D1FAE5;
+  color: #047857;
+}
+
+.project-status-on-hold {
+  background-color: #FEF3C7;
+  color: #92400E;
+}
+
+.project-status-archived,
+.project-status-default {
+  background-color: #E2E8F0;
+  color: #475569;
+}
+
+/* Dark Status Badges */
+html[data-theme="taskflow-dark"] .project-status-planning {
+  background-color: #1E3A5F;
+  color: #BFDBFE;
+}
+
+html[data-theme="taskflow-dark"] .project-status-active,
+html[data-theme="taskflow-dark"] .project-status-completed {
+  background-color: #14513F;
+  color: #A7F3D0;
+}
+
+html[data-theme="taskflow-dark"] .project-status-on-hold {
+  background-color: #59431C;
+  color: #FDE68A;
+}
+
+html[data-theme="taskflow-dark"] .project-status-archived,
+html[data-theme="taskflow-dark"] .project-status-default {
+  background-color: #334155;
+  color: #E2E8F0;
+}
+
+/* Priority Badges */
+.project-priority-low {
+  background-color: #E2E8F0;
+  color: #475569;
+}
+
+.project-priority-medium {
+  background-color: #DBEAFE;
+  color: #1D4ED8;
+}
+
+.project-priority-high {
+  background-color: #FEF3C7;
+  color: #92400E;
+}
+
+.project-priority-urgent {
+  background-color: #FEE2E2;
+  color: #B91C1C;
+}
+
+/* Dark Priority Badges */
+html[data-theme="taskflow-dark"] .project-priority-low {
+  background-color: #334155;
+  color: #E2E8F0;
+}
+
+html[data-theme="taskflow-dark"] .project-priority-medium {
+  background-color: #1E3A5F;
+  color: #BFDBFE;
+}
+
+html[data-theme="taskflow-dark"] .project-priority-high {
+  background-color: #59431C;
+  color: #FDE68A;
+}
+
+html[data-theme="taskflow-dark"] .project-priority-urgent {
+  background-color: #5C2630;
+  color: #FECACA;
+}
+
+/* Loading and Empty States */
+.workspace-state-card {
+  border: 1px solid var(--wd-border);
+  background-color: var(--wd-panel);
+  box-shadow: var(--wd-shadow);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .workspace-stat-card {
+    min-height: 112px;
+    padding: 18px;
+  }
+
+  .workspace-project-card {
+    padding: 19px;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .workspace-page,
+  .workspace-panel,
+  .workspace-stat-card,
+  .workspace-project-card,
+  .workspace-form-control {
+    transition: none;
+  }
+
+  .workspace-stat-card:hover,
+  .workspace-project-card:hover {
+    transform: none;
+  }
+}
+
+
